@@ -19,6 +19,6 @@ class collisionMask():
         for obj in self.object.ObjRoom:
             if obj.name==nameObj:
                 if (obj.x>=x and obj.x<=x2) and (obj.y>=y and obj.y<=y2):
-                    return True 
+                    return True , obj 
         
         return False 

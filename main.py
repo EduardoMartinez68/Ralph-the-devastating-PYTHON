@@ -1,6 +1,7 @@
 import pygame 
 import Player
 import Object
+import ralph
 
 # Initialize Pygame
 pygame.init()
@@ -23,8 +24,18 @@ for i in range(20):
 Objects.append(Object.Wall(screen,Objects,5*32,410))
 Objects.append(Object.Wall(screen,Objects,9*32,480))
 
-player=Player.Player(screen,Objects,0,0)
+player=Player.Player(screen,Objects,0,100)
 Objects.append(player)
+
+
+Ralp=ralph.Ralph(screen,Objects,40,3)
+Objects.append(Ralp)
+Objects.append(Object.Wall(screen,Objects,10*32,3))
+Objects.append(Object.Wall(screen,Objects,10,3))
+
+Objects.append(Object.Windows(screen,Objects,10,410))
+
+
 # Run the game loop
 running = True
 
@@ -38,6 +49,7 @@ while running:
             pass
     keys = pygame.key.get_pressed()
     player.step(keys)
+    Ralp.step()
 
     # Fill the background color of the window
     screen.fill((0, 0, 0))  # black color
