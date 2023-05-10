@@ -53,7 +53,7 @@ class Ralph(Obj.Obj):
             self.time-=.125
         else:
             self.canAtack=True      
-            self.time=240  
+            self.time=120  
 
             #choose the sprite of ralph
             self.sprites='Ralph/Sprite_ralph_move' 

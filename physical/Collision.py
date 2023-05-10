@@ -18,7 +18,10 @@ class collisionMask():
         #we get all the object with the name of the object that we will see if the rectangle collision
         for obj in self.object.ObjRoom:
             if obj.name==nameObj:
-                if (obj.x>=x and obj.x<=x2) and (obj.y>=y and obj.y<=y2):
+                #if (obj.x>=x and obj.x<=x2) and (obj.y>=y and obj.y<=y2):
+                w=obj.sprite_width/2
+                h=obj.sprite_height/2
+                if (obj.x+w>=x and obj.x-w<=x2) and (obj.y+h>=y and obj.y-h<=y2):
                     return True , obj 
         
         return False 

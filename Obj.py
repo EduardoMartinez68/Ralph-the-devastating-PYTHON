@@ -74,5 +74,36 @@ class Obj:
         self.screen.blit(image, (self.x, self.y))
 
 
+    def draw_text(self,menssage,x,y,font=0,color=(255,255,255)):
+        menssage=f'{menssage}'
+        # we will create the font 
+        font =pygame.font.Font(None, 26) if font==0 else font
+
+        # we are gonna the text
+        text = font.render(menssage, True, color)
+
+        #we are gonna to draw in the screen 
+        self.screen.blit(text, (x, y))
+
+    def loadSpriteDraw(self,sprite):
+        sprite_index=[]
+        path=f'{self.getPath()}/Sprite/{sprite}/'
+        for i in self.get_name_sprite(path):
+            sprite_index.append(pygame.image.load(path+i))
+        return sprite_index
+    
+    def draw_sprite(self,sprite, subimg, x, y):
+        sprite_index=self.loadSpriteDraw(sprite)
+        image = pygame.transform.flip(sprite_index[subimg], 1, False)
+        self.screen.blit(image, (x, y)) 
+
+
+    def instance_destroy(self):
+        for obj in self.ObjRoom:
+            if obj == self:
+                self.ObjRoom.remove(obj)
+                break 
+        del self 
+
     def update(self):
         self.draw_self()

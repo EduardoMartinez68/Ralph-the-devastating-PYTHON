@@ -21,20 +21,24 @@ Objects=[]
 for i in range(20):
     Objects.append(Object.Wall(screen,Objects,i*32,500))
 
+
+
 Objects.append(Object.Wall(screen,Objects,5*32,410))
 Objects.append(Object.Wall(screen,Objects,9*32,480))
 
 player=Player.Player(screen,Objects,0,100)
 Objects.append(player)
 
-
 Ralp=ralph.Ralph(screen,Objects,40,3)
 Objects.append(Ralp)
+
+'''
 Objects.append(Object.Wall(screen,Objects,10*32,3))
 Objects.append(Object.Wall(screen,Objects,10,3))
 
-Objects.append(Object.Windows(screen,Objects,10,410))
-
+Objects.append(Object.powerUpHelmet(screen,Objects,10,410))
+Objects.append(Object.powerUpPai(screen,Objects,30,410))
+'''
 
 # Run the game loop
 running = True
@@ -58,6 +62,7 @@ while running:
     for i in Objects:
         i.update()
 
+    player.draw_interface()
     # Update the display
     pygame.display.update()
 
