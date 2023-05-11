@@ -7,6 +7,15 @@ class Wall(Obj.Obj):
     name='Wall'
     sprites='Wall'
 
+class WallInvisible(Wall):
+    sprites='WallInvisible'
+
+class Plataformer(Wall):
+    sprites='plataformer_1'
+
+class PlataformerWindows(Wall):
+    sprites='plataformer_2'
+
 class brick(Obj.Obj):
     name='brick'
     sprites='brick'
@@ -33,7 +42,7 @@ class Windows(Obj.Obj):
     sprites='windows'
     image_speed=0
     image=1
-
+    
     def choose_windows(self):
         self.image_index=0 if self.image_index==1 else 1
 

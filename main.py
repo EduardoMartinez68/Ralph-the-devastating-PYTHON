@@ -2,7 +2,7 @@ import pygame
 import Player
 import Object
 import ralph
-
+import Building
 # Initialize Pygame
 pygame.init()
 
@@ -18,18 +18,18 @@ pygame.display.set_caption("Ralph the devastating")
 Objects=[]
 
 #create the room 
-for i in range(20):
-    Objects.append(Object.Wall(screen,Objects,i*32,500))
+Building.createBuilding(Objects,screen)
+for i in range(5):
+    Objects.append(Object.Wall(screen,Objects,i*175,516))
 
+#muros que collisionan con ralph 
+Objects.append(Object.WallInvisible(screen,Objects,8*32-10,110))
+Objects.append(Object.WallInvisible(screen,Objects,16*32+10,110))
 
-
-Objects.append(Object.Wall(screen,Objects,5*32,410))
-Objects.append(Object.Wall(screen,Objects,9*32,480))
-
-player=Player.Player(screen,Objects,0,100)
+player=Player.Player(screen,Objects,0,480)
 Objects.append(player)
 
-Ralp=ralph.Ralph(screen,Objects,40,3)
+Ralp=ralph.Ralph(screen,Objects,11*32,100)
 Objects.append(Ralp)
 
 '''

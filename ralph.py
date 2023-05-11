@@ -46,7 +46,7 @@ class Ralph(Obj.Obj):
 
             #we will create the bick of atack
             for i in range(4):
-                self.ObjRoom.append(Object.brick(self.screen,self.ObjRoom,random.randint(0, 800),self.y))
+                self.ObjRoom.append(Object.brick(self.screen,self.ObjRoom,random.randint(250, 517),self.y))
 
     def timeMove(self):
         if self.time>0:

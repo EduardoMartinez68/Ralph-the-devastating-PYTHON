@@ -3,9 +3,9 @@ import os
 import Obj 
 class Player(Obj.Obj):
     name='Player'
-    vspeed=1
+    vspeed=1.75
     x,y=3,5
-    image_speed=.025
+    image_speed=.5 #.025
     sprites='Felix/Sprite_felix_run'
     
     player_jump_count=0
@@ -32,27 +32,28 @@ class Player(Obj.Obj):
         # Check if player is jumping
         if self.player_jump:
             if self.player_jump_count > 0:
-                self.y -=5
+                self.y -=3.2
                 self.player_jump_count -= 1                 
 
     def gravity(self):
         w=self.sprite_width/4
-        h=self.sprite_height/2+self.vspeed*2
+        h=self.sprite_height+self.vspeed
         if not self.collision.collision_rectangle(self.x-w,self.y,self.x+w,self.y+h,'Wall'):
             self.y+=self.vspeed #if self.player_jump and self.player_jump_count<=0 else 0 #we will see if the player are jump or falling down 
         else:
-            #we will see if collision with the floor
-            self.player_jump = False
-            self.player_jump_count = 20    
+            if self.player_jump_count<=0:
+                #we will see if collision with the floor
+                self.player_jump = False
+                self.player_jump_count = 20    
 
-        self.upPlataform()
+                self.upPlataform()
 
     def upPlataform(self):
-        w=self.sprite_width/2
-        h=self.sprite_height
-        wall=self.collision.collision_rectangle(self.x-w,self.y-h,self.x+w,self.y-h-4,'Wall') 
+        w=self.sprite_width/2-2
+        h=self.sprite_height/2
+        wall=self.collision.collision_rectangle(self.x-w,self.y-h,self.x+w,self.y-h-2,'Wall') 
         if wall:
-            self.y=wall[1].y-wall[1].sprite_height-2
+            self.y=wall[1].y-wall[1].sprite_height-self.sprite_height/2-5
 
         
 
@@ -68,7 +69,7 @@ class Player(Obj.Obj):
             
         #we will see if be a wall in front of the player
         w=(self.sprite_width/2*self.image_xscale)+self.speed
-        h=self.sprite_height/2
+        h=self.sprite_height/2+self.vspeed
         if not (self.collision.collision_rectangle(self.x,self.y-h,self.x+w,self.y+h,'Wall')):
             self.x+=self.speed*(self.vspeed*self.image_xscale)
     
@@ -86,7 +87,7 @@ class Player(Obj.Obj):
         if self.fix:
             w=(self.sprite_width/2*self.image_xscale)+self.speed
             h=self.sprite_height/2
-            windosCollision=(self.collision.collision_rectangle(self.x,self.y-h,self.x+w,self.y+h,'windows'))  
+            windosCollision=(self.collision.collision_rectangle(self.x-w,self.y-h,self.x+w,self.y+h,'windows'))  
             if windosCollision:
                 windosCollision[1].image=0
 
