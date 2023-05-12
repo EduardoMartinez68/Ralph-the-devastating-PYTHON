@@ -3,6 +3,7 @@ import Player
 import Object
 import ralph
 import Building
+import random
 # Initialize Pygame
 pygame.init()
 
@@ -26,10 +27,10 @@ for i in range(5):
 Objects.append(Object.WallInvisible(screen,Objects,8*32-10,110))
 Objects.append(Object.WallInvisible(screen,Objects,16*32+10,110))
 
-player=Player.Player(screen,Objects,0,480)
+player=Player.Player(screen,Objects,0,470) #480
 Objects.append(player)
 
-Ralp=ralph.Ralph(screen,Objects,11*32,100)
+Ralp=ralph.Ralph(screen,Objects,11*32,138)
 Objects.append(Ralp)
 
 '''
@@ -39,6 +40,10 @@ Objects.append(Object.Wall(screen,Objects,10,3))
 Objects.append(Object.powerUpHelmet(screen,Objects,10,410))
 Objects.append(Object.powerUpPai(screen,Objects,30,410))
 '''
+#time power up 
+timePowerUp=30
+xW=[330,360,438,468]
+yW=[295,360,410,470]
 
 # Run the game loop
 running = True
@@ -63,6 +68,20 @@ while running:
         i.update()
 
     player.draw_interface()
+    
+    pygame.draw.circle(screen, (255,255,255), (player.x, player.y), 2)
+
+    #time power up
+    if timePowerUp>0:
+        timePowerUp-=.01
+    else:
+        timePowerUp=30
+        power=random.randint(0, 1)
+        r=random.randint(0, 3)
+        if power==1:
+            Objects.append(Object.powerUpHelmet(screen,Objects,xW[r],yW[r]+18))
+        else:
+            Objects.append(Object.powerUpPai(screen,Objects,xW[r],yW[r]+18))
     # Update the display
     pygame.display.update()
 

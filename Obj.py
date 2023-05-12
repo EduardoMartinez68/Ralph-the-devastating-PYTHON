@@ -71,7 +71,8 @@ class Obj:
         #change the scale
         image_direction=False if self.image_xscale==1 else True 
         image = pygame.transform.flip(self.sprite_index[self.image_index], image_direction, False)
-        self.screen.blit(image, (self.x, self.y))
+        centerX,centerY=self.x-self.sprite_width/2,self.y-self.sprite_height/2
+        self.screen.blit(image, (centerX, centerY))
 
 
     def draw_text(self,menssage,x,y,font=0,color=(255,255,255)):
@@ -105,5 +106,9 @@ class Obj:
                 break 
         del self 
 
+    def updateVariables(self):
+        pass 
+
     def update(self):
+        self.updateVariables()
         self.draw_self()

@@ -5,7 +5,7 @@ class Player(Obj.Obj):
     name='Player'
     vspeed=1.75
     x,y=3,5
-    image_speed=.5 #.025
+    image_speed=1#.025
     sprites='Felix/Sprite_felix_run'
     
     player_jump_count=0
@@ -32,30 +32,24 @@ class Player(Obj.Obj):
         # Check if player is jumping
         if self.player_jump:
             if self.player_jump_count > 0:
-                self.y -=3.2
+                self.y -=6
                 self.player_jump_count -= 1                 
 
     def gravity(self):
         w=self.sprite_width/4
-        h=self.sprite_height+self.vspeed
-        if not self.collision.collision_rectangle(self.x-w,self.y,self.x+w,self.y+h,'Wall'):
+        h=self.sprite_height/2
+        wall=self.collision.collision_rectangle(self.x-w,self.y+h,self.x+w,self.y+h-self.vspeed,'Wall')
+
+        if not wall:
             self.y+=self.vspeed #if self.player_jump and self.player_jump_count<=0 else 0 #we will see if the player are jump or falling down 
         else:
-            if self.player_jump_count<=0:
-                #we will see if collision with the floor
-                self.player_jump = False
-                self.player_jump_count = 20    
-
-                self.upPlataform()
-
-    def upPlataform(self):
-        w=self.sprite_width/2-2
-        h=self.sprite_height/2
-        wall=self.collision.collision_rectangle(self.x-w,self.y-h,self.x+w,self.y-h-2,'Wall') 
-        if wall:
-            self.y=wall[1].y-wall[1].sprite_height-self.sprite_height/2-5
-
-        
+            if wall[1].y>=self.y+self.vspeed*2:
+                if self.player_jump_count<=0:
+                    #we will see if collision with the floor
+                    self.player_jump = False
+                    self.player_jump_count = 20    
+            else:
+                self.y+=self.vspeed #if self.player_jump and self.player_jump_count<=0 else 0 #we will see if the player are jump or falling down 
 
          
     def move(self,keys):
@@ -68,10 +62,10 @@ class Player(Obj.Obj):
             self.speed=1+self.sp
             
         #we will see if be a wall in front of the player
-        w=(self.sprite_width/2*self.image_xscale)+self.speed
-        h=self.sprite_height/2+self.vspeed
-        if not (self.collision.collision_rectangle(self.x,self.y-h,self.x+w,self.y+h,'Wall')):
-            self.x+=self.speed*(self.vspeed*self.image_xscale)
+        w=((self.sprite_width/4+self.speed)*self.image_xscale)
+        h=self.sprite_height/4
+        if not (self.collision.collision_rectangle(self.x,self.y,self.x+w,self.y+h,'Wall')):
+            self.x+=self.speed*self.image_xscale
     
     def Fix(self,keys):
         if keys[pygame.K_p]: 
@@ -85,9 +79,9 @@ class Player(Obj.Obj):
 
         #we will see if felix is collision with a windows 
         if self.fix:
-            w=(self.sprite_width/2*self.image_xscale)+self.speed
+            w=((self.sprite_width/2+self.speed)*self.image_xscale)
             h=self.sprite_height/2
-            windosCollision=(self.collision.collision_rectangle(self.x-w,self.y-h,self.x+w,self.y+h,'windows'))  
+            windosCollision=(self.collision.collision_rectangle(self.x+w,self.y-h,self.x,self.y+h-self.vspeed,'windows'))  
             if windosCollision:
                 windosCollision[1].image=0
 
@@ -135,6 +129,15 @@ class Player(Obj.Obj):
         self.powerHelmet=False if self.alarm[1]<=0 else True    
 
         self.sp=0 if self.alarm[0]<=0 else 1   
+
+    def updateVariables(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT] or keys[pygame.K_a] or keys[pygame.K_LEFT] or keys[pygame.K_p]:
+            self.image_speed=.45
+        else:
+            self.image=1
+            self.image_speed=0
+
 
     def step(self,event):
         self.gravity()
