@@ -83,7 +83,9 @@ class Player(Obj.Obj):
             h=self.sprite_height/2
             windosCollision=(self.collision.collision_rectangle(self.x+w,self.y-h,self.x,self.y+h-self.vspeed,'windows'))  
             if windosCollision:
-                windosCollision[1].image=0
+                if windosCollision[1].image!=0:
+                    self.score+=10
+                    windosCollision[1].image=0
 
     def draw_interface(self):
         y,space,spacex=10,30,220
@@ -110,7 +112,7 @@ class Player(Obj.Obj):
         self.time-=.125/12 if self.time>0 else 0
 
     def receiveWound(self):
-        w=self.sprite_width
+        w=self.sprite_width/4
         h=self.sprite_height
         #we will see if the player collision with a brick 
         collision=self.collision.collision_rectangle(self.x-w,self.y,self.x+w,self.y+h,'brick')

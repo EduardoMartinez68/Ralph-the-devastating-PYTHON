@@ -4,6 +4,8 @@ import Object
 import ralph
 import Building
 import random
+import puntaje
+
 # Initialize Pygame
 pygame.init()
 
@@ -33,13 +35,6 @@ Objects.append(player)
 Ralp=ralph.Ralph(screen,Objects,11*32,138)
 Objects.append(Ralp)
 
-'''
-Objects.append(Object.Wall(screen,Objects,10*32,3))
-Objects.append(Object.Wall(screen,Objects,10,3))
-
-Objects.append(Object.powerUpHelmet(screen,Objects,10,410))
-Objects.append(Object.powerUpPai(screen,Objects,30,410))
-'''
 #time power up 
 timePowerUp=30
 xW=[330,360,438,468]
@@ -69,8 +64,6 @@ while running:
 
     player.draw_interface()
     
-    pygame.draw.circle(screen, (255,255,255), (player.x, player.y), 2)
-
     #time power up
     if timePowerUp>0:
         timePowerUp-=.01
@@ -82,6 +75,11 @@ while running:
             Objects.append(Object.powerUpHelmet(screen,Objects,xW[r],yW[r]+18))
         else:
             Objects.append(Object.powerUpPai(screen,Objects,xW[r],yW[r]+18))
+
+    #draw the game over 
+    if player.life<=0:
+        puntaje.draw(player.score,screen)
+
     # Update the display
     pygame.display.update()
 

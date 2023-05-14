@@ -79,6 +79,7 @@ class powerUpPai(Obj.Obj):
 
         #the player will activate his power up
         if player:
+            player[1].score+=50
             self.activatePowerUp(player[1])
             self.instance_destroy()
 
