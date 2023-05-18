@@ -87,6 +87,17 @@ class Player(Obj.Obj):
                     self.score+=10
                     windosCollision[1].image=0
 
+                    #We will see if there are more broken windows on the room 
+                    self.seeIfThereAreMoreBroken()
+
+    def seeIfThereAreMoreBroken(self):
+        for i in self.ObjRoom:
+            if i.name=='windows' and i.image==1:
+                return 
+
+        #if not are more broken windows, the player wing 
+        self.life=0
+
     def draw_interface(self):
         y,space,spacex=10,30,220
         xT=120
