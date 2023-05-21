@@ -19,21 +19,36 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Ralph the devastating")
 
 Objects=[]
-
+level=3
 #create the room 
-Building.createBuilding(Objects,screen)
-for i in range(5):
+Building.createBuilding(Objects,screen,level)
+for i in range(5): #floor
     Objects.append(Object.Wall(screen,Objects,i*175,516))
 
-#muros que collisionan con ralph 
-Objects.append(Object.WallInvisible(screen,Objects,8*32-10,110))
-Objects.append(Object.WallInvisible(screen,Objects,16*32+10,110))
-
-player=Player.Player(screen,Objects,0,470) #480
+player=Player.Player(screen,Objects,400,500) #480
 Objects.append(player)
 
-Ralp=ralph.Ralph(screen,Objects,11*32,138)
+#we will to create to ralph 
+yRalph=407-(212*(level))-55
+Ralp=ralph.Ralph(screen,Objects,11*32,yRalph)
 Objects.append(Ralp)
+
+#muros que collisionan con ralph 
+Objects.append(Object.WallInvisible(screen,Objects,8*32-10,yRalph))
+Objects.append(Object.WallInvisible(screen,Objects,16*32+10,yRalph))
+
+def updateCamera():
+    if player.y<=20:
+        player.y=500
+        for obj in Objects:
+            if obj.name!='Player':
+                obj.y=obj.y+560
+
+    if player.y>=580:
+        player.y=30
+        for obj in Objects:
+            if obj.name!='Player':
+                obj.y=obj.y-560
 
 #time power up 
 timePowerUp=30
@@ -81,6 +96,7 @@ while running:
         puntaje.draw(player.score,screen)
 
     # Update the display
+    updateCamera()
     pygame.display.update()
 
 # Quit Pygame

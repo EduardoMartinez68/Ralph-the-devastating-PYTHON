@@ -4,7 +4,8 @@ import Obj
 class Player(Obj.Obj):
     name='Player'
     vspeed=1.75
-    x,y=3,5
+    x,y=400,8
+    yGlobal=y
     image_speed=1#.025
     sprites='Felix/Sprite_felix_run'
     
@@ -50,6 +51,7 @@ class Player(Obj.Obj):
                     self.player_jump_count = 20    
             else:
                 self.y+=self.vspeed #if self.player_jump and self.player_jump_count<=0 else 0 #we will see if the player are jump or falling down 
+                self.yGlobal+=self.vspeed
 
          
     def move(self,keys):

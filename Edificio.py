@@ -9,6 +9,12 @@ class Edificio(Obj.Obj):
     x, y = 3, 5
     image_speed=0
     sprites = 'Edificio/edificio'
+
+class Edificio2(Obj.Obj):
+    name = 'Edificio'
+    x, y = 3, 5
+    image_speed=0
+    sprites = 'Edificio/edificio2'
 class Super(Obj.Obj):
     name = 'Super'
     x, y = 3, 5

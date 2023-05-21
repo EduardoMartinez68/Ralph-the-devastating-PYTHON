@@ -31,6 +31,8 @@ class Obj:
     def __init__(self,screen,ObjRoom,x,y):
         self.x=x
         self.y=y
+        self.xStar=x
+        self.yStart=y
         self.screen=screen
         self.ObjRoom=ObjRoom
         self.collision=Collision.collisionMask(self)
