@@ -18,6 +18,7 @@ class Player(Obj.Obj):
     life=3
     time=400
     score=0
+    nextLevel=False
 
     #poweer up
     powerPai=False
@@ -98,7 +99,7 @@ class Player(Obj.Obj):
                 return 
 
         #if not are more broken windows, the player wing 
-        self.life=0
+        self.nextLevel=True
 
     def draw_interface(self):
         y,space,spacex=10,30,220

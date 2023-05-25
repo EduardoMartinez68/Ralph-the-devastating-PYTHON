@@ -11,7 +11,7 @@ class Ralph(Obj.Obj):
 
 
     loser=False
-    time=30
+    time=25
     speed=1
     canAtack=True 
     up=False

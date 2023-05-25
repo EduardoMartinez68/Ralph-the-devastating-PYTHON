@@ -42,7 +42,7 @@ class Obj:
         self.sprite_index=[]
         path=f'{self.getPath()}/Sprite/{self.sprites}/'
         for i in self.get_name_sprite(path):
-            self.sprite_index.append(pygame.image.load(path+i))
+            self.sprite_index.append(pygame.image.load(path+i).convert_alpha())
 
         #get the size of the sprite 
         sprite_size = self.sprite_index[0].get_size()

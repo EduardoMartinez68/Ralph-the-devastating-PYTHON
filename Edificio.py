@@ -16,12 +16,18 @@ class Edificio2(Obj.Obj):
     image_speed=0
     sprites = 'Edificio/edificio2'
 class Super(Obj.Obj):
-    name = 'Super'
+    name = 'Edificio'
     x, y = 3, 5
     image_speed = 0
     sprites = 'Edificio/sup'
 class Entrada(Obj.Obj):
-    name = 'entrada'
+    name = 'Edificio'
     x, y = 3, 5
     image_speed = 0
     sprites = 'Edificio/puerta'
+
+class wallpaper(Obj.Obj):
+    name = 'wallpaper'
+    x, y = 3, 5
+    image_speed = 0
+    sprites = 'wallpaper'

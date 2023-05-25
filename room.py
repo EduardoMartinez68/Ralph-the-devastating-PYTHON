@@ -5,7 +5,7 @@ import ralph
 import Building
 import random
 import puntaje
-
+import Edificio
 # Initialize Pygame
 pygame.init()
 
@@ -19,8 +19,9 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Ralph the devastating")
 
 Objects=[]
-level=3
+level=1
 #create the room 
+Objects.append(Edificio.wallpaper(screen,Objects,WINDOW_WIDTH/2,370))
 Building.createBuilding(Objects,screen,level)
 for i in range(5): #floor
     Objects.append(Object.Wall(screen,Objects,i*175,516))
@@ -33,9 +34,11 @@ yRalph=407-(212*(level))-55
 Ralp=ralph.Ralph(screen,Objects,11*32,yRalph)
 Objects.append(Ralp)
 
+
 #muros que collisionan con ralph 
-Objects.append(Object.WallInvisible(screen,Objects,8*32-10,yRalph))
-Objects.append(Object.WallInvisible(screen,Objects,16*32+10,yRalph))
+w1,w2=Object.WallInvisible(screen,Objects,8*32-10,yRalph),Object.WallInvisible(screen,Objects,16*32+10,yRalph)
+Objects.append(w1)
+Objects.append(w2)
 
 def updateCamera():
     if player.y<=20:
@@ -50,8 +53,35 @@ def updateCamera():
             if obj.name!='Player':
                 obj.y=obj.y-560
 
+
+def createNextLvel():
+    global Objects,level,w1,w2,player
+    #we will delete all the windows and brick 
+    for i in Objects:
+        if i.name=='windows' or i.name=='Edificio' or i.name=='brick':
+            i.instance_destroy()
+
+    #create a new edificio
+    level+=1
+    yRalph=407-(212*(level))-55
+    Ralp.y=yRalph
+
+    #muros que collisionan con ralph 
+    w1.y=yRalph
+    w2.y=yRalph
+
+    #create building
+    Building.createBuilding(Objects,screen,level)
+
+    #upload the player
+    player.x,player.y=400,500
+    for index, obj in enumerate(Objects):
+        if obj.name=='Player' or obj.name=='Ralph':
+            element = Objects.pop(index)
+            Objects.insert(len(Objects), element) 
+
 #time power up 
-timePowerUp=30
+timePowerUp=20
 xW=[330,360,438,468]
 yW=[295,360,410,470]
 
@@ -94,6 +124,12 @@ while running:
     #draw the game over 
     if player.life<=0:
         puntaje.draw(player.score,screen)
+
+    #nextlevel
+    if player.nextLevel:
+        screen.fill((0, 0, 0))  # black color
+        player.nextLevel=False
+        createNextLvel()
 
     # Update the display
     updateCamera()
